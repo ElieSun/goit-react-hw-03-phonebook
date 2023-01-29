@@ -43,7 +43,7 @@ export class App extends Component {
   render () {
     return (
       <Phonebook>
-        <MainTitle>Phonebook</MainTitle>
+        <MainTitle>iPhoneBook &#63743;</MainTitle>
         <ContactForm
           formSubmitHandle={this.formSubmitHandle}
         />
@@ -57,5 +57,20 @@ export class App extends Component {
       </Phonebook>
     );
   }
-  
+
+  componentDidMount() {
+    const localContacts = localStorage.getItem('contacts');
+    if (localContacts) {
+      const contacts = JSON.parse(localContacts);
+      this.setState({ contacts: contacts })
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.contacts !== this.state.contacts) {
+      console.log('component updated');
+      window.localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+    console.log('componentDidUpdate');
+  }
 }
